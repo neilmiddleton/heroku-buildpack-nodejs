@@ -46,6 +46,12 @@ status "Downloading and installing node"
 node_url="http://s3pository.heroku.com/node/v$node_version/node-v$node_version-linux-x64.tar.gz"
 curl $node_url -s -o - | tar xzf - -C $build_dir
 
+# Remove any existing .gitignore file so that .npmignore doesn't get spawned
+rm -f .gitignore
+if [ ! -e .npmignore ]; then
+  echo "" > .npmignore
+fi
+
 # Move node (and npm) into ./vendor and make them executable
 mkdir -p $build_dir/vendor
 mv $build_dir/node-v$node_version-linux-x64 $build_dir/vendor/node
@@ -54,14 +60,6 @@ PATH=$PATH:$build_dir/vendor/node/bin
 
 # Run subsequent node/npm commands from the build path
 cd $build_dir
-
-# Remove any existing .gitignore file so that .npmignore doesn't get spawned
-ls -la
-echo "--------"
-if [ ".gitignore" ]; then
-  status "Removing committed .gitignore file"
-  rm -f .gitignore
-fi
 
 # If node_modules directory is checked into source control then
 # rebuild any native deps. Otherwise, restore from the build cache.
