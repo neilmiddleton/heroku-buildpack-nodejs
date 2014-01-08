@@ -47,9 +47,9 @@ node_url="http://s3pository.heroku.com/node/v$node_version/node-v$node_version-l
 curl $node_url -s -o - | tar xzf - -C $build_dir
 
 # Remove any existing .gitignore file so that .npmignore doesn't get spawned
-rm -f .gitignore
-if [ ! -e .npmignore ]; then
-  echo "" > .npmignore
+rm -f $build_dir/.gitignore
+if [ ! -e $build_dir/.npmignore ]; then
+  echo "" > $build_dir/.npmignore
 fi
 
 # Move node (and npm) into ./vendor and make them executable
