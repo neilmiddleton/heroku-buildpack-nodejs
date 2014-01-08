@@ -56,6 +56,8 @@ PATH=$PATH:$build_dir/vendor/node/bin
 cd $build_dir
 
 # Remove any existing .gitignore file so that .npmignore doesn't get spawned
+ls -la
+echo "--------"
 if [ ".gitignore" ]; then
   status "Removing committed .gitignore file"
   rm -f .gitignore
