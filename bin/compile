@@ -56,7 +56,10 @@ PATH=$PATH:$build_dir/vendor/node/bin
 cd $build_dir
 
 # Remove any existing .gitignore file so that .npmignore doesn't get spawned
-rm -f $build_dir/.gitignore
+if [ ".gitignore" ]; then
+  status "Removing committed .gitignore file"
+  rm -f .gitignore
+fi
 
 # If node_modules directory is checked into source control then
 # rebuild any native deps. Otherwise, restore from the build cache.
